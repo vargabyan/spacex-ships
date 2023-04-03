@@ -17,7 +17,7 @@ const List = () => {
   const itemsMax = Number(page) * listCountItms;
   const itemsMin = itemsMax - listCountItms;
   let filterData: Array<DataState> = data;
-  const [searchParams, _setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const nameFilterParam: string | null = searchParams.get("name");
   const typeFilterParam: string | null = searchParams.get("type");

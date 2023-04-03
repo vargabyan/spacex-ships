@@ -9,9 +9,9 @@ import { DataState } from "../../reducers/dataSlice";
 
 function PageCard() {
   const data = useSelector((state: RootState) => state.data.value);
-  const { page } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const currentData: DataState = data.filter(({ id }) => id !== page)[0];
+  const currentData: DataState = data.filter((index) => index.id === id)[0];
 
   const goToback = () => {
     navigate(-1);
@@ -31,29 +31,37 @@ function PageCard() {
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            <Grid item xs={12} md={2}>
-              <Typography className="textColorGrey">Тип</Typography>
-              <Typography className="textFloatLeft">
-                {currentData.type}
-              </Typography>
+            <Grid item xs={12}>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={4} md={3} lg={2}>
+                  <Typography className="textColorGrey">Тип</Typography>
+                  <Typography className="textFloatLeft">
+                    {currentData.type}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm>
+                  <Typography className="textColorGrey">Порт</Typography>
+                  <Typography className="textFloatLeft">
+                    {currentData.port}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={10}>
-              <Typography className="textColorGrey">Порт</Typography>
-              <Typography className="textFloatLeft">
-                {currentData.port}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={2}>
-              <Typography className="textColorGrey">Вес</Typography>
-              <Typography className="textFloatLeft">
-                {currentData.weight}
-              </Typography>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography className="textColorGrey">Год</Typography>
-              <Typography className="textFloatLeft">
-                {currentData.data}
-              </Typography>
+            <Grid item xs={12}>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={4} md={3} lg={2}>
+                  <Typography className="textColorGrey">Вес</Typography>
+                  <Typography className="textFloatLeft">
+                    {currentData.weight} кг
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm>
+                  <Typography className="textColorGrey">Год</Typography>
+                  <Typography className="textFloatLeft">
+                    {currentData.data.slice(0, 4)}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
