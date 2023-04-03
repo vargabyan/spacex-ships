@@ -12,7 +12,7 @@ const Pagination = () => {
   const { page } = useParams();
   const navigate = useNavigate();
   const listCountItms: number = 5;
-  const conteForPage: number = listCount / listCountItms;
+  const conteForPage: number = Math.ceil(listCount / listCountItms);
   const currentPage: number = Number(page);
   const location = useLocation();
 
