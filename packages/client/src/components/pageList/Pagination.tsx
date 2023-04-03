@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { PaginationStyles } from "./styledComponents";
 
@@ -15,40 +14,20 @@ const Pagination = () => {
   const listCountItms: number = 5;
   const conteForPage: number = listCount / listCountItms;
   const currentPage: number = Number(page);
-  const [searchParams, _setSearchParams] = useSearchParams();
-
-  const typeFilterParam: string | null = searchParams.get("type")
-    ? searchParams.get("port")
-    : "";
-  const portFilterParam: string | null = searchParams.get("port")
-    ? searchParams.get("port")
-    : "";
-  const nameFilterParam: string | null = searchParams.get("name")
-    ? searchParams.get("name")
-    : "";
+  const location = useLocation();
 
   const handleClick = (key: string) => {
     if (key === "next" && currentPage < conteForPage) {
-      navigate(
-        `${
-          currentPage + 1
-        }?type=${typeFilterParam}&port=${portFilterParam}&name=${nameFilterParam}`
-      );
+      navigate(`${currentPage + 1}${location.search}`);
     }
     if (key === "back" && currentPage > 1) {
-      navigate(
-        `${
-          currentPage - 1
-        }?type=${typeFilterParam}&port=${portFilterParam}&name=${nameFilterParam}`
-      );
+      navigate(`${currentPage - 1}${location.search}`);
     }
   };
 
   useEffect(() => {
-    if (page !== "1") {
-      navigate(
-        `1?type=${typeFilterParam}&port=${portFilterParam}&name=${nameFilterParam}`
-      );
+    if (Number(page) > conteForPage) {
+      navigate(`1${location.search}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listCount]);
